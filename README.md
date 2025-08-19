@@ -1,6 +1,6 @@
 # Rockbuster
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/OJ/rockbuster/v3)](https://goreportcard.com/report/github.com/OJ/rockbuster/v3) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/OJ/rockbuster/blob/master/LICENSE) [![Backers on Open Collective](https://opencollective.com/rockbuster/backers/badge.svg)](https://opencollective.com/rockbuster) [![Sponsors on Open Collective](https://opencollective.com/rockbuster/sponsors/badge.svg)](https://opencollective.com/rockbuster)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/Meiroudii/rockbuster/blob/master/LICENSE) 
 
 ## 💻 Introduction
 
@@ -468,3 +468,9 @@ _Remember: Always test responsibly and with proper authorization._
 - Option to supply custom HTTP headers
 
 </details>
+
+
+## Acknowledgments
+
+This project is based on [Gobuster](https://github.com/OJ/gobuster), originally developed by Christian Mehlmauer (@firefart) and OJ Reeves (@TheColonial).  
+Licensed under the Apache License 2.0.

@@ -6,14 +6,14 @@ import (
 	"os"
 	"runtime/debug"
 
-	"github.com/OJ/gobuster/v3/cli/dir"
-	"github.com/OJ/gobuster/v3/cli/dns"
-	"github.com/OJ/gobuster/v3/cli/fuzz"
-	"github.com/OJ/gobuster/v3/cli/gcs"
-	"github.com/OJ/gobuster/v3/cli/s3"
-	"github.com/OJ/gobuster/v3/cli/tftp"
-	"github.com/OJ/gobuster/v3/cli/vhost"
-	"github.com/OJ/gobuster/v3/libgobuster"
+	"github.com/Meiroudii/rockbuster/v3/cli/dir"
+	"github.com/Meiroudii/rockbuster/v3/cli/dns"
+	"github.com/Meiroudii/rockbuster/v3/cli/fuzz"
+	"github.com/Meiroudii/rockbuster/v3/cli/gcs"
+	"github.com/Meiroudii/rockbuster/v3/cli/s3"
+	"github.com/Meiroudii/rockbuster/v3/cli/tftp"
+	"github.com/Meiroudii/rockbuster/v3/cli/vhost"
+	"github.com/Meiroudii/rockbuster/v3/libgobuster"
 	"github.com/urfave/cli/v2"
 
 	"go.uber.org/automaxprocs/maxprocs"
@@ -25,7 +25,7 @@ func main() {
 	}
 
 	cli.VersionPrinter = func(_ *cli.Context) {
-		fmt.Printf("gobuster version %s\n", libgobuster.VERSION) // nolint:forbidigo
+		fmt.Printf("rockbuster version %s\n", libgobuster.VERSION) // nolint:forbidigo
 		if info, ok := debug.ReadBuildInfo(); ok {
 			fmt.Printf("Build info:\n") // nolint forbidigo
 			fmt.Printf("%s", info)      // nolint forbidigo
@@ -33,18 +33,15 @@ func main() {
 	}
 
 	app := &cli.App{
-		Name:      "gobuster",
-		Usage:     "the tool you love",
-		UsageText: "gobuster command [command options]",
+		Name:      "rockbuster",
+		Usage:     "Use this tool ethically",
+		UsageText: "rockbuster command [command options]",
 		Authors: []*cli.Author{
 			{
-				Name: "Christian Mehlmauer (@firefart)",
-			},
-			{
-				Name: "OJ Reeves (@TheColonial)",
+				Name: "Meiroudii" (@meiroudii)",
 			},
 		},
-		Version: libgobuster.GetVersion(),
+		Version: librockbuster.GetVersion(),
 		Commands: []*cli.Command{
 			dir.Command(),
 			vhost.Command(),

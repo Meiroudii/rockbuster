@@ -1,4 +1,4 @@
-package gobusterdir
+package rockbusterdir
 
 import (
 	"bufio"
@@ -14,7 +14,7 @@ import (
 	"text/tabwriter"
 	"unicode/utf8"
 
-	"github.com/OJ/gobuster/v3/libgobuster"
+	"github.com/OJ/rockbuster/v3/librockbuster"
 	"github.com/google/uuid"
 )
 
@@ -43,15 +43,15 @@ func (e *WildcardError) Error() string {
 	return fmt.Sprintf("the server returns a status code that matches the provided options for non existing urls. %s. Please exclude the response length or the status code or set the wildcard option.", addInfo)
 }
 
-// GobusterDir is the main type to implement the interface
-type GobusterDir struct {
+// rockbusterDir is the main type to implement the interface
+type rockbusterDir struct {
 	options    *OptionsDir
-	globalopts *libgobuster.Options
-	http       *libgobuster.HTTPClient
+	globalopts *librockbuster.Options
+	http       *librockbuster.HTTPClient
 }
 
-// New creates a new initialized GobusterDir
-func New(globalopts *libgobuster.Options, opts *OptionsDir, logger *libgobuster.Logger) (*GobusterDir, error) {
+// New creates a new initialized rockbusterDir
+func New(globalopts *librockbuster.Options, opts *OptionsDir, logger *librockbuster.Logger) (*rockbusterDir, error) {
 	if globalopts == nil {
 		return nil, errors.New("please provide valid global options")
 	}
@@ -60,12 +60,12 @@ func New(globalopts *libgobuster.Options, opts *OptionsDir, logger *libgobuster.
 		return nil, errors.New("please provide valid plugin options")
 	}
 
-	g := GobusterDir{
+	g := rockbusterDir{
 		options:    opts,
 		globalopts: globalopts,
 	}
 
-	basicOptions := libgobuster.BasicHTTPOptions{
+	basicOptions := librockbuster.BasicHTTPOptions{
 		Proxy:            opts.Proxy,
 		Timeout:          opts.Timeout,
 		UserAgent:        opts.UserAgent,
@@ -77,7 +77,7 @@ func New(globalopts *libgobuster.Options, opts *OptionsDir, logger *libgobuster.
 		LocalAddr:        opts.LocalAddr,
 	}
 
-	httpOpts := libgobuster.HTTPOptions{
+	httpOpts := librockbuster.HTTPOptions{
 		BasicHTTPOptions:      basicOptions,
 		FollowRedirect:        opts.FollowRedirect,
 		Username:              opts.Username,
@@ -88,7 +88,7 @@ func New(globalopts *libgobuster.Options, opts *OptionsDir, logger *libgobuster.
 		Method:                opts.Method,
 	}
 
-	h, err := libgobuster.NewHTTPClient(&httpOpts, logger)
+	h, err := librockbuster.NewHTTPClient(&httpOpts, logger)
 	if err != nil {
 		return nil, err
 	}
@@ -98,27 +98,27 @@ func New(globalopts *libgobuster.Options, opts *OptionsDir, logger *libgobuster.
 }
 
 // Name should return the name of the plugin
-func (d *GobusterDir) Name() string {
+func (d *rockbusterDir) Name() string {
 	return "directory enumeration"
 }
 
-// PreRun is the pre run implementation of gobusterdir
-func (d *GobusterDir) PreRun(ctx context.Context, pr *libgobuster.Progress) error {
+// PreRun is the pre run implementation of rockbusterdir
+func (d *rockbusterDir) PreRun(ctx context.Context, pr *librockbuster.Progress) error {
 	// add trailing slash
 	if !strings.HasSuffix(d.options.URL.Path, "/") {
 		d.options.URL.Path = fmt.Sprintf("%s/", d.options.URL.Path)
 	}
 
-	_, _, _, _, err := d.http.Request(ctx, *d.options.URL, libgobuster.RequestOptions{})
+	_, _, _, _, err := d.http.Request(ctx, *d.options.URL, librockbuster.RequestOptions{})
 	if err != nil {
 		var retErr error
 		switch {
 		case errors.Is(err, io.EOF):
-			retErr = libgobuster.ErrEOF
+			retErr = librockbuster.ErrEOF
 		case os.IsTimeout(err):
-			retErr = libgobuster.ErrTimeout
+			retErr = librockbuster.ErrTimeout
 		case errors.Is(err, syscall.ECONNREFUSED):
-			retErr = libgobuster.ErrConnectionRefused
+			retErr = librockbuster.ErrConnectionRefused
 		default:
 			retErr = fmt.Errorf("unable to connect to %s: %w", d.options.URL, err)
 		}
@@ -126,8 +126,8 @@ func (d *GobusterDir) PreRun(ctx context.Context, pr *libgobuster.Progress) erro
 			return retErr
 		}
 		// if force is set, we continue even if the preRun fails
-		pr.MessageChan <- libgobuster.Message{
-			Level:   libgobuster.LevelWarn,
+		pr.MessageChan <- librockbuster.Message{
+			Level:   librockbuster.LevelWarn,
 			Message: fmt.Sprintf("PreRun failed with error: %s. Continuing because force is set.", retErr),
 		}
 	}
@@ -139,16 +139,16 @@ func (d *GobusterDir) PreRun(ctx context.Context, pr *libgobuster.Progress) erro
 		url.Path = fmt.Sprintf("%s/", url.Path)
 	}
 
-	wildcardResp, wildcardLength, wildcardHeader, _, err := d.http.Request(ctx, url, libgobuster.RequestOptions{})
+	wildcardResp, wildcardLength, wildcardHeader, _, err := d.http.Request(ctx, url, librockbuster.RequestOptions{})
 	if err != nil {
 		var retErr error
 		switch {
 		case errors.Is(err, io.EOF):
-			retErr = libgobuster.ErrEOF
+			retErr = librockbuster.ErrEOF
 		case os.IsTimeout(err):
-			retErr = libgobuster.ErrTimeout
+			retErr = librockbuster.ErrTimeout
 		case errors.Is(err, syscall.ECONNREFUSED):
-			retErr = libgobuster.ErrConnectionRefused
+			retErr = librockbuster.ErrConnectionRefused
 		default:
 			retErr = fmt.Errorf("unable to connect to %s: %w", url.String(), err)
 		}
@@ -156,8 +156,8 @@ func (d *GobusterDir) PreRun(ctx context.Context, pr *libgobuster.Progress) erro
 			return retErr
 		}
 		// if force is set, we continue even if the preRun fails
-		pr.MessageChan <- libgobuster.Message{
-			Level:   libgobuster.LevelWarn,
+		pr.MessageChan <- librockbuster.Message{
+			Level:   librockbuster.LevelWarn,
 			Message: fmt.Sprintf("PreRun failed with error: %s. Continuing because force is set.", retErr),
 		}
 	}
@@ -183,7 +183,7 @@ func (d *GobusterDir) PreRun(ctx context.Context, pr *libgobuster.Progress) erro
 	return nil
 }
 
-func (d *GobusterDir) AdditionalSuccessWords(word string) []string {
+func (d *rockbusterDir) AdditionalSuccessWords(word string) []string {
 	if d.options.DiscoverBackup {
 		ret := make([]string, len(backupExtensions)+len(backupDotExtensions))
 		i := 0
@@ -202,11 +202,11 @@ func (d *GobusterDir) AdditionalSuccessWords(word string) []string {
 	return []string{}
 }
 
-func (d *GobusterDir) AdditionalWordsLen() int {
+func (d *rockbusterDir) AdditionalWordsLen() int {
 	return len(d.options.ExtensionsParsed.Set)
 }
 
-func (d *GobusterDir) AdditionalWords(word string) []string {
+func (d *rockbusterDir) AdditionalWords(word string) []string {
 	words := make([]string, 0, d.AdditionalWordsLen())
 	// build list of urls to check
 	//   1: No extension
@@ -218,8 +218,8 @@ func (d *GobusterDir) AdditionalWords(word string) []string {
 	return words
 }
 
-// ProcessWord is the process implementation of gobusterdir
-func (d *GobusterDir) ProcessWord(ctx context.Context, word string, progress *libgobuster.Progress) (libgobuster.Result, error) {
+// ProcessWord is the process implementation of rockbusterdir
+func (d *rockbusterDir) ProcessWord(ctx context.Context, word string, progress *librockbuster.Progress) (librockbuster.Result, error) {
 	suffix := ""
 	if d.options.UseSlash {
 		suffix = "/"
@@ -237,8 +237,8 @@ func (d *GobusterDir) ProcessWord(ctx context.Context, word string, progress *li
 
 	// add some debug output
 	if d.globalopts.Debug {
-		progress.MessageChan <- libgobuster.Message{
-			Level:   libgobuster.LevelDebug,
+		progress.MessageChan <- librockbuster.Message{
+			Level:   librockbuster.LevelDebug,
 			Message: fmt.Sprintf("trying %s", entity),
 		}
 	}
@@ -254,7 +254,7 @@ func (d *GobusterDir) ProcessWord(ctx context.Context, word string, progress *li
 	var header http.Header
 	for i := 1; i <= tries; i++ {
 		var err error
-		statusCode, size, header, _, err = d.http.Request(ctx, url, libgobuster.RequestOptions{})
+		statusCode, size, header, _, err = d.http.Request(ctx, url, librockbuster.RequestOptions{})
 		if err != nil {
 			// check if it's a timeout and if we should try again and try again
 			// otherwise the timeout error is raised
@@ -262,18 +262,18 @@ func (d *GobusterDir) ProcessWord(ctx context.Context, word string, progress *li
 				continue
 			} else if strings.Contains(err.Error(), "invalid control character in URL") {
 				// put error in error chan, so it's printed out and ignore it
-				// so gobuster will not quit
+				// so rockbuster will not quit
 				progress.ErrorChan <- err
 				continue
 			}
 
 			switch {
 			case errors.Is(err, io.EOF):
-				return nil, libgobuster.ErrEOF
+				return nil, librockbuster.ErrEOF
 			case os.IsTimeout(err):
-				return nil, libgobuster.ErrTimeout
+				return nil, librockbuster.ErrTimeout
 			case errors.Is(err, syscall.ECONNREFUSED):
-				return nil, libgobuster.ErrConnectionRefused
+				return nil, librockbuster.ErrConnectionRefused
 			}
 			return nil, err
 		}
@@ -323,7 +323,7 @@ func (d *GobusterDir) ProcessWord(ctx context.Context, word string, progress *li
 }
 
 // GetConfigString returns the string representation of the current config
-func (d *GobusterDir) GetConfigString() (string, error) {
+func (d *rockbusterDir) GetConfigString() (string, error) {
 	var buffer bytes.Buffer
 	bw := bufio.NewWriter(&buffer)
 	tw := tabwriter.NewWriter(bw, 0, 5, 3, ' ', 0)
