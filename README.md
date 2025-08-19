@@ -1,12 +1,12 @@
-# Gobuster
+# Rockbuster
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/OJ/gobuster/v3)](https://goreportcard.com/report/github.com/OJ/gobuster/v3) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/OJ/gobuster/blob/master/LICENSE) [![Backers on Open Collective](https://opencollective.com/gobuster/backers/badge.svg)](https://opencollective.com/gobuster) [![Sponsors on Open Collective](https://opencollective.com/gobuster/sponsors/badge.svg)](https://opencollective.com/gobuster)
+[![Go Report Card](https://goreportcard.com/badge/github.com/OJ/rockbuster/v3)](https://goreportcard.com/report/github.com/OJ/rockbuster/v3) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/OJ/rockbuster/blob/master/LICENSE) [![Backers on Open Collective](https://opencollective.com/rockbuster/backers/badge.svg)](https://opencollective.com/rockbuster) [![Sponsors on Open Collective](https://opencollective.com/rockbuster/sponsors/badge.svg)](https://opencollective.com/rockbuster)
 
 ## 💻 Introduction
 
 > A fast and flexible brute-forcing tool written in Go
 
-**Gobuster** is a high-performance directory/file, DNS and virtual host brute-forcing tool written in Go. It's designed to be fast, reliable, and easy to use for security professionals and penetration testers.
+**Rockbuster** is a high-performance directory/file, DNS and virtual host brute-forcing tool written in Go. It's designed to be fast, reliable, and easy to use for security professionals and penetration testers.
 
 ## ✨ Features
 
@@ -16,7 +16,7 @@
 - 🐳 **Docker Support**: Available as a Docker container
 - 🔧 **Extensible**: Pattern-based scanning and custom wordlists
 
-## 🎯 What Can Gobuster Do?
+## 🎯 What Can Rockbuster Do?
 
 - **Web Directory/File Enumeration**: Discover hidden directories and files on web servers
 - **DNS Subdomain Discovery**: Find subdomains with wildcard support
@@ -28,20 +28,20 @@
 ## 🚀 Quick Start
 
 ```bash
-# Install gobuster
-go install github.com/OJ/gobuster/v3@latest
+# Install rockbuster
+go install github.com/Meiroudii/rockbuster/v3@latest
 
 # Basic directory enumeration
-gobuster dir -u https://example.com -w /path/to/wordlist.txt
+rockbuster dir -u https://example.com -w /path/to/wordlist.txt
 
 # DNS subdomain enumeration
-gobuster dns -do example.com -w /path/to/wordlist.txt
+rockbuster dns -do example.com -w /path/to/wordlist.txt
 
 # Virtual host discovery
-gobuster vhost -u https://example.com -w /path/to/wordlist.txt
+rockbuster vhost -u https://example.com -w /path/to/wordlist.txt
 
 # S3 bucket enumeration
-gobuster s3 -w /path/to/bucket-names.txt
+rockbuster s3 -w /path/to/bucket-names.txt
 ```
 
 ## 📦 Installation
@@ -49,7 +49,7 @@ gobuster s3 -w /path/to/bucket-names.txt
 ### Quick Install (Recommended)
 
 ```bash
-go install github.com/OJ/gobuster/v3@latest
+go install github.com/OJ/rockbuster/v3@latest
 ```
 
 **Requirements**: Go 1.24 or higher
@@ -58,23 +58,23 @@ go install github.com/OJ/gobuster/v3@latest
 
 #### Using Binary Releases
 
-Download pre-compiled binaries from the [releases page](https://github.com/OJ/gobuster/releases).
+Download pre-compiled binaries from the [releases page](https://github.com/OJ/rockbuster/releases).
 
 #### Using Docker
 
 ```bash
 # Pull the latest image
-docker pull ghcr.io/oj/gobuster:latest
+docker pull ghcr.io/oj/rockbuster:latest
 
-# Run gobuster in Docker
-docker run --rm -it ghcr.io/oj/gobuster:latest dir -u https://example.com -w /usr/share/wordlists/dirb/common.txt
+# Run rockbuster in Docker
+docker run --rm -it ghcr.io/oj/rockbuster:latest dir -u https://example.com -w /usr/share/wordlists/dirb/common.txt
 ```
 
 #### Building from Source
 
 ```bash
-git clone https://github.com/OJ/gobuster.git
-cd gobuster
+git clone https://github.com/OJ/rockbuster.git
+cd rockbuster
 go mod tidy
 go build
 ```
@@ -89,18 +89,18 @@ If you encounter issues:
 
 ## 🎯 Usage
 
-Gobuster uses a mode-based approach. Each mode is designed for specific enumeration tasks:
+rockbuster uses a mode-based approach. Each mode is designed for specific enumeration tasks:
 
 ```bash
-gobuster [mode] [options]
+rockbuster [mode] [options]
 ```
 
 ### Getting Help
 
 ```bash
-gobuster help                   # Show general help
-gobuster help [mode]            # Show help for specific mode
-gobuster [mode] --help          # Alternative help syntax
+rockbuster help                   # Show general help
+rockbuster help [mode]            # Show help for specific mode
+rockbuster [mode] --help          # Alternative help syntax
 ```
 
 ### 📊 Available Modes
@@ -112,23 +112,23 @@ Enumerate directories and files on web servers.
 **Basic Usage:**
 
 ```bash
-gobuster dir -u https://example.com -w wordlist.txt
+rockbuster dir -u https://example.com -w wordlist.txt
 ```
 
 **Advanced Options:**
 
 ```bash
 # With file extensions
-gobuster dir -u https://example.com -w wordlist.txt -x php,html,js,txt
+rockbuster dir -u https://example.com -w wordlist.txt -x php,html,js,txt
 
 # With custom headers and cookies
-gobuster dir -u https://example.com -w wordlist.txt -H "Authorization: Bearer token" -c "session=value"
+rockbuster dir -u https://example.com -w wordlist.txt -H "Authorization: Bearer token" -c "session=value"
 
 # Show response length
-gobuster dir -u https://example.com -w wordlist.txt -l
+rockbuster dir -u https://example.com -w wordlist.txt -l
 
 # Filter by status codes
-gobuster dir -u https://example.com -w wordlist.txt -s 200,301,302
+rockbuster dir -u https://example.com -w wordlist.txt -s 200,301,302
 ```
 
 #### 🔍 DNS Mode (`dns`)
@@ -138,17 +138,17 @@ Discover subdomains through DNS resolution.
 **Basic Usage:**
 
 ```bash
-gobuster dns -do example.com -w wordlist.txt
+rockbuster dns -do example.com -w wordlist.txt
 ```
 
 **Advanced Options:**
 
 ```bash
 # Use custom DNS server
-gobuster dns -do example.com -w wordlist.txt -r 8.8.8.8:53
+rockbuster dns -do example.com -w wordlist.txt -r 8.8.8.8:53
 
 # Increase threads for faster scanning
-gobuster dns -do example.com -w wordlist.txt -t 50
+rockbuster dns -do example.com -w wordlist.txt -t 50
 ```
 
 #### 🏠 Virtual Host Mode (`vhost`)
@@ -158,7 +158,7 @@ Discover virtual hosts on web servers.
 **Basic Usage:**
 
 ```bash
-gobuster vhost -u https://example.com --append-domain -w wordlist.txt
+rockbuster vhost -u https://example.com --append-domain -w wordlist.txt
 ```
 
 #### ☁️ S3 Mode (`s3`)
@@ -168,13 +168,13 @@ Enumerate Amazon S3 buckets.
 **Basic Usage:**
 
 ```bash
-gobuster s3 -w bucket-names.txt
+rockbuster s3 -w bucket-names.txt
 ```
 
 **With Debug Output:**
 
 ```bash
-gobuster s3 -w bucket-names.txt --debug
+rockbuster s3 -w bucket-names.txt --debug
 ```
 
 #### 🖥️ TFTP Mode (`tftp`)
@@ -184,7 +184,7 @@ Enumerate files on tftp servers.
 **Basic Usage:**
 
 ```bash
-gobuster tftp -s 10.0.0.1 -w wordlist.txt
+rockbuster tftp -s 10.0.0.1 -w wordlist.txt
 ```
 
 #### ☁️ GCS Mode (`gcs`)
@@ -194,13 +194,13 @@ Enumerate Google Cloud Storage Buckets.
 **Basic Usage:**
 
 ```bash
-gobuster gcs -w bucket-names.txt
+rockbuster gcs -w bucket-names.txt
 ```
 
 **With Debug Output:**
 
 ```bash
-gobuster gcs -w bucket-names.txt --debug
+rockbuster gcs -w bucket-names.txt --debug
 ```
 
 #### 🔧 Fuzz Mode (`fuzz`)
@@ -210,31 +210,31 @@ Custom fuzzing with the `FUZZ` keyword.
 **Basic Usage:**
 
 ```bash
-gobuster fuzz -u https://example.com?FUZZ=test -w wordlist.txt
+rockbuster fuzz -u https://example.com?FUZZ=test -w wordlist.txt
 ```
 
 **Advanced Examples:**
 
 ```bash
 # Fuzz URL parameters
-gobuster fuzz -u https://example.com?param=FUZZ -w wordlist.txt
+rockbuster fuzz -u https://example.com?param=FUZZ -w wordlist.txt
 
 # Fuzz headers
-gobuster fuzz -u https://example.com -H "X-Custom-Header: FUZZ" -w wordlist.txt
+rockbuster fuzz -u https://example.com -H "X-Custom-Header: FUZZ" -w wordlist.txt
 
 # Fuzz POST data
-gobuster fuzz -u https://example.com -d "username=admin&password=FUZZ" -w passwords.txt
+rockbuster fuzz -u https://example.com -d "username=admin&password=FUZZ" -w passwords.txt
 ```
 
 ## 💰 Support
 
-[![Backers on Open Collective](https://opencollective.com/gobuster/backers/badge.svg)](https://opencollective.com/gobuster) [![Sponsors on Open Collective](https://opencollective.com/gobuster/sponsors/badge.svg)](https://opencollective.com/gobuster)
+[![Backers on Open Collective](https://opencollective.com/rockbuster/backers/badge.svg)](https://opencollective.com/rockbuster) [![Sponsors on Open Collective](https://opencollective.com/rockbuster/sponsors/badge.svg)](https://opencollective.com/rockbuster)
 
 ### Love this tool? Back it!
 
-If you're backing us already, you rock. If you're not, that's cool too! Want to back us? [Become a backer](https://opencollective.com/gobuster#backer)!
+If you're backing us already, you rock. If you're not, that's cool too! Want to back us? [Become a backer](https://opencollective.com/rockbuster#backer)!
 
-[![Backers](https://opencollective.com/gobuster/backers.svg?width=890)](https://opencollective.com/gobuster#backers)
+[![Backers](https://opencollective.com/rockbuster/backers.svg?width=890)](https://opencollective.com/rockbuster#backers)
 
 All funds that are donated to this project will be donated to charity. A full log of charity donations will be available in this repository as they are processed.
 
@@ -244,30 +244,30 @@ All funds that are donated to this project will be donated to charity. A full lo
 
 ```bash
 # Comprehensive directory enumeration
-gobuster dir -u https://target.com -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x php,html,js,txt,asp,aspx,jsp
+rockbuster dir -u https://target.com -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -x php,html,js,txt,asp,aspx,jsp
 
 # API endpoint discovery
-gobuster dir -u https://api.target.com -w /usr/share/wordlists/dirb/common.txt -x json
+rockbuster dir -u https://api.target.com -w /usr/share/wordlists/dirb/common.txt -x json
 
 # Admin panel discovery
-gobuster dir -u https://target.com -w admin-panels.txt -s 200,301,302,403
+rockbuster dir -u https://target.com -w admin-panels.txt -s 200,301,302,403
 ```
 
 ### DNS Reconnaissance
 
 ```bash
 # Comprehensive subdomain enumeration
-gobuster dns -do target.com -w /usr/share/wordlists/dnsrecon/subdomains-top1mil-5000.txt -t 50
+rockbuster dns -do target.com -w /usr/share/wordlists/dnsrecon/subdomains-top1mil-5000.txt -t 50
 ```
 
 ### Cloud Storage Assessment
 
 ```bash
 # S3 bucket enumeration with patterns
-gobuster s3 -w company-names.txt -v
+rockbuster s3 -w company-names.txt -v
 
 # GCS bucket enumeration
-gobuster gcs -w company-names.txt -v
+rockbuster gcs -w company-names.txt -v
 ```
 
 ## 🔧 Troubleshooting
@@ -320,10 +320,10 @@ gobuster gcs -w company-names.txt -v
 
 ```bash
 # Save results to file
-gobuster dir -u https://example.com -w wordlist.txt -o results.txt
+rockbuster dir -u https://example.com -w wordlist.txt -o results.txt
 
 # Use quiet mode for clean output
-gobuster dir -u https://example.com -w wordlist.txt -q
+rockbuster dir -u https://example.com -w wordlist.txt -q
 ```
 
 ## 📚 Additional Resources
@@ -394,7 +394,7 @@ _Remember: Always test responsibly and with proper authorization._
 - Wordlist offset parameter to skip x lines from the wordlist
 - prevent double slashes when building up an url in dir mode
 - allow for multiple values and ranges on `--exclude-length`
-- `no-fqdn` parameter on dns bruteforce to disable the use of the systems search domains. This should speed up the run if you have configured some search domains. [https://github.com/OJ/gobuster/pull/418](https://github.com/OJ/gobuster/pull/418)
+- `no-fqdn` parameter on dns bruteforce to disable the use of the systems search domains. This should speed up the run if you have configured some search domains. [https://github.com/OJ/rockbuster/pull/418](https://github.com/OJ/rockbuster/pull/418)
 
 </details>
 
@@ -452,7 +452,7 @@ _Remember: Always test responsibly and with proper authorization._
 - enumerate public AWS S3 buckets
 - fuzzing mode
 - specify HTTP method
-- added support for patterns. You can now specify a file containing patterns that are applied to every word, one by line. Every occurrence of the term `{GOBUSTER}` in it will be replaced with the current wordlist item. Please use with caution as this can cause increase the number of requests issued a lot.
+- added support for patterns. You can now specify a file containing patterns that are applied to every word, one by line. Every occurrence of the term `{rockbuster}` in it will be replaced with the current wordlist item. Please use with caution as this can cause increase the number of requests issued a lot.
 - The shorthand `p` flag which was assigned to proxy is now used by the pattern flag
 
 </details>
