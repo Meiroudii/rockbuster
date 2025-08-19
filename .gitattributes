@@ -72,6 +72,7 @@
 *.tar      binary
 *.tgz      binary
 *.zip      binary
+*.bz2      binary
 
 # Text files where line endings should be preserved
 *.patch    -text
