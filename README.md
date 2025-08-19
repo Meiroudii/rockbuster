@@ -2,6 +2,10 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/Meiroudii/rockbuster/blob/master/LICENSE) 
 
+## NOTICE:
+This repo still in the config state, thus running this tool might yell you some errors.
+*You have been warned*
+
 ## 💻 Introduction
 
 > A fast and flexible brute-forcing tool written in Go
@@ -84,7 +88,9 @@ go build
 If you encounter issues:
 
 - Ensure Go version 1.24+ is installed: `go version`
+    - You can install Go to their official website `go.dev`
 - Check your `$GOPATH` and `$GOBIN` environment variables
+    - If you're using zsh you should check your paths
 - Verify `$GOPATH/bin` is in your `$PATH`
 
 ## 🎯 Usage
